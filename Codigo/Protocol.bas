@@ -2913,6 +2913,11 @@ Private Sub HandleWorkLeftClick(ByVal UserIndex As Integer)
                                 Call RemoveUserInvisibility(UserIndex)
                             End If
                         End If
+                        If ProjectileType = 3 Then
+                            ' Msg709=No tenés municiones.
+                            Call WriteLocaleMsg(UserIndex, "709", e_FontTypeNames.FONTTYPE_INFO)
+                            Exit Sub
+                        End If
 208                     Call UsuarioAtacaUsuario(UserIndex, tU, Ranged)
                         Dim FX As Integer
                         If .Invent.MunicionEqpObjIndex Then
@@ -2961,7 +2966,9 @@ Private Sub HandleWorkLeftClick(ByVal UserIndex As Integer)
                             If UserAttackInteractionResult.CanAttack Then
                                 If UserAttackInteractionResult.TurnPK Then Call VolverCriminal(UserIndex)
 236                             Call UsuarioAtacaNpc(UserIndex, tN, Ranged)
+                                If Not ProjectileType = 3 Then
 238                             consumirMunicion = True
+                                End If
                                 If ProjectileType > 0 And .flags.Oculto = 0 Then
                                     Call SendData(SendTarget.ToPCAliveArea, UserIndex, PrepareCreateProjectile(UserList(UserIndex).Pos.X, UserList(UserIndex).Pos.y, X, y, ProjectileType))
                                 End If
